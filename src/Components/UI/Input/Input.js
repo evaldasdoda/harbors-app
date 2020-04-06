@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // Styles
 require('./Input.scss');
 
-const input = props => {
+const input = (props) => {
     return (
         <input
             id={props.id}
@@ -15,6 +15,7 @@ const input = props => {
             onChange={props.onChange}
             placeholder={props.placeholder}
             required={props.required}
+            min={props.min}
         />
     );
 };
@@ -26,7 +27,7 @@ input.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
-    required: PropTypes.bool
+    required: PropTypes.bool,
 };
 
 export default input;
