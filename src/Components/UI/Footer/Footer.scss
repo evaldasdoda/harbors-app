@@ -1,0 +1,13 @@
+@import '../../../Assets/style.scss';
+
+.FOOTER {
+    // margin-top: $space-sm;
+    text-align: center;
+    padding: $space-sm;
+    border-top: 1px solid black;
+    & a {
+        color: $black;
+        font-size: $font-md;
+        text-decoration: none;
+    }
+}

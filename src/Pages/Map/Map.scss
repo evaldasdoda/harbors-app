@@ -1,0 +1,25 @@
+@import '../../Assets//styles/setup.scss';
+
+.MAP{
+    width:100vw;
+    height: calc(100vh - 169px);
+    &__popup{
+        min-width: 400px;
+        padding: $space-xxs;
+        & img{
+            width:100%;
+        }
+        & h2, h3{
+            margin-top: $space-xs;
+            font-size: $font-sm;
+            & svg{
+                color: $grey;
+                margin-right: $space-sm;
+                width: 32px !important;
+            }
+        }
+    }
+    .gm-style .gm-style-iw-c{
+        width: 100%;
+    }
+}

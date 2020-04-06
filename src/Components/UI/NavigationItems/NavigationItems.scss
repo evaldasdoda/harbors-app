@@ -1,0 +1,23 @@
+@import "../../../Assets/styles/setup";
+
+.NAVIGATION {
+    list-style: none;
+    display: flex;
+    margin-left: -20px;
+    &__item {
+        margin-right: 20px;
+        & a {
+            color: $black;
+            font-size: $font-xs;
+            border-bottom: 2px solid transparent;
+            transition: all $duration-sm;
+            &:hover {
+                text-decoration: none;
+                border-bottom: 2px solid $black;
+            }
+        }
+    }
+    .active {
+        // border-bottom: 2px solid $black;
+    }
+}

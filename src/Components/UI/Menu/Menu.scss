@@ -1,0 +1,12 @@
+@import '../../../Assets/style.scss';
+
+.MENU {
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+    &__logo {
+        width: 100px;
+    }
+}

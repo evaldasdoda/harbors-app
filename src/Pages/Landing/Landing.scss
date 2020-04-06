@@ -1,0 +1,23 @@
+@import '../../Assets//styles/setup.scss';
+
+.HEADER{
+    background-image: linear-gradient(to bottom, rgba(0,0,0, 0.2), rgba(0, 0, 0, 0.3)), url('../../Assets/img/harbour.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: calc(100vh - 169px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    &__content{
+        text-align: center;
+        & h1{
+            color: $white;
+            font-size: $font-xxl;
+        }
+        & button{
+            margin-top: $space-sm
+        }
+    }
+}

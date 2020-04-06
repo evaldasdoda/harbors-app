@@ -1,0 +1,21 @@
+@import '../../Assets//styles/setup.scss';
+
+.FORM{
+    & label{
+        margin-top: $space-xs;
+    }
+    & button{
+        margin-top: $space-sm;
+    }
+    & .loader{
+        position: relative;
+        & .LOADER{
+            &__container{
+                position: absolute;
+            }
+            & img{
+                width: 200px;
+            }
+        }
+    }
+}

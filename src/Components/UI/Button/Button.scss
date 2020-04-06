@@ -1,0 +1,15 @@
+@import "../../../Assets/styles/setup";
+
+.BUTTON {
+    & a{
+        color: $white;
+        text-decoration: none;
+    }
+    &:active,
+    &:hover {
+    }
+    &-rev {
+    }
+    &-active {
+    }
+}
