@@ -3,7 +3,6 @@ import axios from 'axios';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThermometerFull, faHome, faMapMarkerAlt, faCloud } from '@fortawesome/free-solid-svg-icons';
-
 // Components
 import Button from '../../Components/UI/Button/Button';
 import BookingForm from '../../Components/BookingForm/BookingForm';
@@ -109,6 +108,10 @@ export default class Gmap extends React.Component {
                                 key={harbour.id}
                                 position={{ lat: parseFloat(harbour.lat), lng: parseFloat(harbour.lon) }}
                                 onClick={() => this.getSelectedHarbour(harbour)}
+                                icon={{
+                                    url: '/map-pin.png',
+                                    scaledSize: new window.google.maps.Size(50,50)
+                                }}
                             />
                         );
                     }, this)}
