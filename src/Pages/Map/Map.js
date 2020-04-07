@@ -119,7 +119,7 @@ export default class Gmap extends React.Component {
                                 lng: parseFloat(this.state.selectedHarbour.lon),
                             }}
                             onCloseClick={() => {
-                                this.setState({ selectedHarbour: null, harbourWeather: null });
+                                this.setState({ selectedHarbour: null, harbourWeather: null, showBookingForm:false });
                             }}
                         >
                             <div className="MAP__popup">
@@ -134,8 +134,12 @@ export default class Gmap extends React.Component {
                                     <i>Weather provider - OpenWeather</i>
                                 </h3>
                                 <h3>
-                                    <FontAwesomeIcon icon={faMapMarkerAlt} />
-                                    {this.state.harbourWeather.name} | {this.state.harbourWeather.sys.country}
+                                    {this.state.harbourWeather.name && this.state.harbourWeather.sys.country &&
+                                        <React.Fragment>
+                                            <FontAwesomeIcon icon={faMapMarkerAlt} />
+                                            {this.state.harbourWeather.name} | {this.state.harbourWeather.sys.country}
+                                        </React.Fragment>
+                                    }
                                 </h3>
                                 <h3>
                                     <FontAwesomeIcon icon={faCloud} />
