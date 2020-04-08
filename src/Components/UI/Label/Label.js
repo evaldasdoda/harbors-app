@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 const input = props => {
     return (
-        <label htmlFor={props.for}>{props.children}</label>
+        <label data-testid="label" htmlFor={props.for}>{props.children}</label>
     );
 };
 

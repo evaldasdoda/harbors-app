@@ -13,11 +13,25 @@ import Modal from '../../Components/UI/Modal/Modal';
 import mapStyles from './MapStyles';
 require('./Map.scss');
 
+// const google = window.google = window.google ? window.google : {}
+
 export default class Gmap extends React.Component {
     state = {
-        harbours: [],
-        selectedHarbour: null,
-        harbourWeather: null,
+        harbors: [],
+        selectedHarbor: {
+            image: null,
+            name: null,
+            lat: null,
+            lon: null,
+            canBook: null
+        },
+        harborWeather: {
+            city: null,
+            country: null,
+            tempC: null,
+            tempF: null,
+            condition: null
+        },
         showBookingForm: false,
         isLoading: false,
         isModalOpen: false,
@@ -27,15 +41,7 @@ export default class Gmap extends React.Component {
         },
     };
 
-    UNSAFE_componentWillMount() {
-        this.toggleLoader();
-        axios.get(`https://devapi.harba.co/harbors/visible`).then((res) => {
-            this.setState({ harbours: res.data });
-            console.log(this.state.harbours);
-            this.toggleLoader();
-        });
-    }
-
+    
     WrappedMap = withScriptjs(
         withGoogleMap((props) => (
             <GoogleMap defaultZoom={10} defaultCenter={{ lat: 54.675693, lng: 25.284074 }} defaultOptions={{ styles: mapStyles }}>
@@ -43,20 +49,41 @@ export default class Gmap extends React.Component {
             </GoogleMap>
         ))
     );
-
-    getSelectedHarbour(harbour) {
+    
+    UNSAFE_componentWillMount() {
+        this.toggleLoader();
+        axios.get(`https://devapi.harba.co/harbors/visible`).then((res) => {
+            this.setState({ harbors: res.data });
+            this.toggleLoader();
+        });
+    }
+    getSelectedHarbor(harbor) {
+        console.log(harbor)
         this.toggleLoader();
         axios
             .get(
-                `https://api.openweathermap.org/data/2.5/weather?lat=${harbour.lat}&lon=${harbour.lon}&units=metric&appid=${process.env.REACT_APP_OPENWEATHER_KEY}`
+                `https://api.openweathermap.org/data/2.5/weather?lat=${harbor.lat}&lon=${harbor.lon}&units=metric&appid=${process.env.REACT_APP_OPENWEATHER_KEY}`
             )
             .then((res) => {
-                this.setState({ harbourWeather: res.data });
-                this.setState({ selectedHarbour: harbour });
+                this.setState({
+                    harborWeather:{
+                        city: res.data.name,
+                        country: res.data.sys.country,
+                        tempC: Math.round(res.data.main.temp),
+                        tempF: Math.round(res.data.main.temp*9/5+32),
+                        condition: res.data.weather[0].main
+                    }
+                })
+                this.setState({ selectedHarbor: {
+                    image: harbor.image,
+                    name: harbor.name,
+                    lat: parseFloat(harbor.lat),
+                    lon: parseFloat(harbor.lon),
+                    canBook: harbor.canBook
+                } });
                 this.toggleLoader();
             })
             .catch((err) => {
-                console.log(err);
                 this.setState({
                     message: {
                         header: 'Request error',
@@ -84,7 +111,6 @@ export default class Gmap extends React.Component {
             isModalOpen: !prevState.isModalOpen,
         }));
     }
-
     render() {
         return (
             <section className="MAP">
@@ -94,6 +120,7 @@ export default class Gmap extends React.Component {
                         onButtonClick={() => this.toggleModal()}
                         header={this.state.message.header}
                         content={this.state.message.content}
+                        backClick={true}
                     />
                 )}
                 <this.WrappedMap
@@ -102,64 +129,80 @@ export default class Gmap extends React.Component {
                     containerElement={<div style={{ height: '100%' }} />}
                     mapElement={<div style={{ height: '100%' }} />}
                 >
-                    {this.state.harbours.map(function (harbour, i) {
+                    {this.state.harbors.map(function (harbor, i) {
                         return (
                             <Marker
-                                key={harbour.id}
-                                position={{ lat: parseFloat(harbour.lat), lng: parseFloat(harbour.lon) }}
-                                onClick={() => this.getSelectedHarbour(harbour)}
+                                key={harbor.id}
+                                position={{ lat: parseFloat(harbor.lat), lng: parseFloat(harbor.lon) }}
+                                onClick={() => this.getSelectedHarbor(harbor)}
                                 icon={{
                                     url: '/map-pin.png',
                                     scaledSize: new window.google.maps.Size(50,50)
                                 }}
-                            />
+                                />
                         );
                     }, this)}
-                    {this.state.selectedHarbour && (
+                    {this.state.selectedHarbor.name && (
                         <InfoWindow
                             position={{
-                                lat: parseFloat(this.state.selectedHarbour.lat),
-                                lng: parseFloat(this.state.selectedHarbour.lon),
+                                lat: parseFloat(this.state.selectedHarbor.lat),
+                                lng: parseFloat(this.state.selectedHarbor.lon),
                             }}
                             onCloseClick={() => {
-                                this.setState({ selectedHarbour: null, harbourWeather: null, showBookingForm:false });
+                                this.setState({ 
+                                    selectedHarbor: {
+                                        image: null,
+                                        name: null,
+                                        lat: null,
+                                        lon: null,
+                                        canBook: null
+                                    },
+                                    harborWeather: {
+                                        city: null,
+                                        country: null,
+                                        tempC: null,
+                                        tempF: null,
+                                        condition: null
+                                    },
+                                    showBookingForm:false 
+                                });
                             }}
                         >
                             <div className="MAP__popup">
-                                {this.state.selectedHarbour.image && (
-                                    <img src={`https://devapi.harba.co/${this.state.selectedHarbour.image}`} alt="Harbour" />
+                                {this.state.selectedHarbor.image && (
+                                    <img src={`https://devapi.harba.co${this.state.selectedHarbor.image}`} alt="Harbor" />
                                 )}
                                 <h2>
                                     <FontAwesomeIcon icon={faHome} />
-                                    {this.state.selectedHarbour.name}
+                                    {this.state.selectedHarbor.name}
                                 </h2>
                                 <h3>
-                                    <i>Weather provider - OpenWeather</i>
-                                </h3>
-                                <h3>
-                                    {this.state.harbourWeather.name && this.state.harbourWeather.sys.country &&
+                                    {this.state.harborWeather.city && this.state.harborWeather.country &&
                                         <React.Fragment>
                                             <FontAwesomeIcon icon={faMapMarkerAlt} />
-                                            {this.state.harbourWeather.name} | {this.state.harbourWeather.sys.country}
+                                            {this.state.harborWeather.city} | {this.state.harborWeather.country}
                                         </React.Fragment>
                                     }
                                 </h3>
                                 <h3>
                                     <FontAwesomeIcon icon={faCloud} />
-                                    {this.state.harbourWeather.weather[0].main}
+                                    {this.state.harborWeather.condition}
                                 </h3>
                                 <h3>
                                     <FontAwesomeIcon icon={faThermometerFull} />
-                                    {Math.round(this.state.harbourWeather.main.temp)}
+                                    {this.state.harborWeather.tempC} &deg;C | {this.state.harborWeather.tempF} &deg;F
                                 </h3>
-                                {this.state.selectedHarbour.canBook && (
+                                <h3>
+                                    <i>Weather provider - OpenWeather</i>
+                                </h3>
+                                {this.state.selectedHarbor.canBook && (
                                     <Button class="btn-primary" clicked={() => this.toggleBookingForm()}>
                                         Book now
                                     </Button>
                                 )}
                                 {this.state.showBookingForm && (
                                     <BookingForm
-                                        selectedHarbour={this.state.selectedHarbour.name}
+                                        selectedHarbor={this.state.selectedHarbor.name}
                                         closeForm={this.toggleBookingForm.bind(this)}
                                     />
                                 )}

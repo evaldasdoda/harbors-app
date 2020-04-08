@@ -7,10 +7,11 @@ require('./Input.scss');
 const input = (props) => {
     return (
         <input
+            data-testid="input"
             id={props.id}
             type={props.type}
             name={props.name}
-            value={props.value}
+            defaultValue={props.value}
             className={'INPUT form-control'}
             onChange={props.onChange}
             placeholder={props.placeholder}
@@ -28,6 +29,7 @@ input.propTypes = {
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
     required: PropTypes.bool,
+    min: PropTypes.string
 };
 
 export default input;

@@ -66,7 +66,7 @@ export default class BookingForm extends React.Component {
                     this.state.captain +
                     ', you have been registered in ' +
                     this.props.selectedHarbour +
-                    ' harbour from ' +
+                    ' harbor from ' +
                     this.state.dateFrom +
                     ' to ' +
                     this.state.dateTo,
@@ -103,6 +103,7 @@ export default class BookingForm extends React.Component {
                         onButtonClick={() => this.toggleModal()}
                         header={this.state.message.header}
                         content={this.state.message.content}
+                        backClick={false}
                     />
                 )}
 

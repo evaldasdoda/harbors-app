@@ -6,7 +6,7 @@ require('./Button.scss');
 
 const button = props => {
     return (
-        <button disabled={props.disabled} className={'BUTTON btn ' + props.class} onClick={props.clicked} type={props.type}>
+        <button data-testid="button" disabled={props.disabled} className={'BUTTON btn ' + props.class} onClick={props.clicked} type={props.type}>
             {props.children}
         </button>
     );

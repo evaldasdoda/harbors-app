@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<button
+  className="BUTTON btn btn-danger"
+  data-testid="button"
+  disabled={false}
+  type="button"
+>
+  Submit
+</button>
+`;

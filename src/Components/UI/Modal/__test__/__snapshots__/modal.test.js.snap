@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div
+  className="MODAL"
+  data-testid="modal"
+>
+  <div
+    className="MODAL__container"
+  >
+    <h2>
+      Header
+    </h2>
+    <hr />
+    <p>
+      Content
+    </p>
+    <button
+      className="BUTTON btn btn-danger"
+      data-testid="button"
+    >
+      Close
+    </button>
+  </div>
+</div>
+`;

@@ -10,7 +10,7 @@ export default function Landing() {
     return (
         <section className="HEADER">
             <div className="HEADER__content">
-                <h1>Harbour searching app</h1>
+                <h1>Harbor searching app</h1>
                 <Button class="btn-primary">
                     <HashRouter>
                         <NavLink to="/map"> Go to map </NavLink>

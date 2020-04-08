@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<input
+  className="INPUT form-control"
+  data-testid="input"
+  id="testid"
+  min="2000-01-01"
+  name="testname"
+  onChange={[Function]}
+  placeholder="test"
+  required={true}
+  type="date"
+/>
+`;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import Button from '../Button/Button';
@@ -15,25 +16,33 @@ export default class modal extends React.Component {
     }
 
     componentDidMount() {
-        document.addEventListener('mousedown', this.handleClickOutside);
+        if(this.props.backClick){
+            document.addEventListener('mousedown', this.handleClickOutside);
+        }
     }
 
     componentWillUnmount() {
-        document.removeEventListener('mousedown', this.handleClickOutside);
+        if(this.props.backClick){
+            document.removeEventListener('mousedown', this.handleClickOutside);
+        }
     }
 
     setWrapperRef(node) {
-        this.wrapperRef = node;
+        if(this.props.backClick){
+            this.wrapperRef = node;
+        }
     }
 
     handleClickOutside(event) {
-        if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-            this.props.onButtonClick();
+        if(this.props.backClick){
+            if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+                this.props.onButtonClick();
+            }
         }
     }
     render() {
         return (
-            <div ref={this.setWrapperRef} className="MODAL">
+            <div data-testid="modal" ref={this.setWrapperRef} className="MODAL">
                 <div className="MODAL__container">
                     <h2>{this.props.header}</h2>
                     <hr />
@@ -46,3 +55,9 @@ export default class modal extends React.Component {
         );
     }
 }
+modal.propTypes = {
+    backClick: PropTypes.bool,
+    header: PropTypes.string,
+    content: PropTypes.string,
+    onButtonClick: PropTypes.func,
+};
