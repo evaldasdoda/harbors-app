@@ -14,6 +14,9 @@ import Modal from '../../Components/UI/Modal/Modal';
 import mapStyles from './MapStyles';
 require('./Map.scss');
 
+
+const google = window.google = window.google ? window.google : {}
+
 export default class Gmap extends React.Component {
     state = {
         harbors: [],
@@ -57,7 +60,6 @@ export default class Gmap extends React.Component {
         });
     }
     getSelectedHarbor(harbor) {
-        console.log(harbor)
         this.toggleLoader();
         axios
             .get(
@@ -136,7 +138,7 @@ export default class Gmap extends React.Component {
                                 onClick={() => this.getSelectedHarbor(harbor)}
                                 icon={{
                                     url: '/map-pin.png',
-                                    scaledSize: new window.google.maps.Size(50,50)
+                                    scaledSize: new google.maps.Size(50,50)
                                 }}
                                 />
                         );
@@ -144,8 +146,8 @@ export default class Gmap extends React.Component {
                     {this.state.selectedHarbor.name && (
                         <InfoWindow
                             position={{
-                                lat: parseFloat(this.state.selectedHarbor.lat),
-                                lng: parseFloat(this.state.selectedHarbor.lon),
+                                lat: this.state.selectedHarbor.lat,
+                                lng: this.state.selectedHarbor.lon,
                             }}
                             onCloseClick={() => {
                                 this.setState({ 
