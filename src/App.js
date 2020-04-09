@@ -1,14 +1,16 @@
 import React from 'react';
 
-import './App.scss';
-
+// Components
 import Layout from './Components/Layout/Layout';
+import HOC from './Hoc/Hoc'
+
+import './App.scss';
 
 function App() {
     return (
-        <div className="APP">
+        <HOC>
             <Layout />
-        </div>
+        </HOC>
     );
 }
 

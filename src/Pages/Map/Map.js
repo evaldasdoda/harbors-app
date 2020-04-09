@@ -3,6 +3,7 @@ import axios from 'axios';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThermometerFull, faHome, faMapMarkerAlt, faCloud } from '@fortawesome/free-solid-svg-icons';
+
 // Components
 import Button from '../../Components/UI/Button/Button';
 import BookingForm from '../../Components/BookingForm/BookingForm';
@@ -12,8 +13,6 @@ import Modal from '../../Components/UI/Modal/Modal';
 // Styles
 import mapStyles from './MapStyles';
 require('./Map.scss');
-
-// const google = window.google = window.google ? window.google : {}
 
 export default class Gmap extends React.Component {
     state = {
@@ -129,7 +128,7 @@ export default class Gmap extends React.Component {
                     containerElement={<div style={{ height: '100%' }} />}
                     mapElement={<div style={{ height: '100%' }} />}
                 >
-                    {this.state.harbors.map(function (harbor, i) {
+                    {this.state.harbors.map(function (harbor) {
                         return (
                             <Marker
                                 key={harbor.id}
